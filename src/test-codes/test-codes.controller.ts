@@ -10,11 +10,21 @@ import {
 import { CreateTestCodeDto } from './dto/create-test-code.dto';
 import { UpdateTestCodeDto } from './dto/update-test-code.dto';
 import { TestCodesService } from './test-codes.service';
-import { TestCodeEntity } from './test-code.entity';
+import { TestCodeEntity } from './entity/test-code.entity';
+import { TestCodesSeeder } from './seeder/test-codes.seeder';
 
 @Controller('test-codes')
 export class TestCodesController {
-  constructor(private readonly testCodesService: TestCodesService) {}
+  constructor(
+    private readonly testCodesService: TestCodesService,
+    private readonly testCodesSeeder: TestCodesSeeder,
+  ) {}
+
+  @Get('create-data')
+  async createData(): Promise<TestCodeEntity[]> {
+    await this.testCodesSeeder.seed();
+    return this.testCodesService.findAll();
+  }
 
   @Get()
   findAll(): Promise<TestCodeEntity[]> {

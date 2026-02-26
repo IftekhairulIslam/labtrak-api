@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateTestCodeDto } from './dto/create-test-code.dto';
 import { UpdateTestCodeDto } from './dto/update-test-code.dto';
-import { TestCodeEntity } from './test-code.entity';
+import { TestCodeEntity } from './entity/test-code.entity';
 
 @Injectable()
 export class TestCodesService {

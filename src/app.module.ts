@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestCodesModule } from './test-codes/test-codes.module';
-import { TestCodeEntity } from './test-codes/test-code.entity';
+import { TestCodeEntity } from './test-codes/entity/test-code.entity';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -28,7 +28,5 @@ import { ConfigModule } from '@nestjs/config';
   providers: [AppService],
 })
 export class AppModule {
-  constructor() {
-    console.log(process.env);
-  }
+  constructor() {}
 }

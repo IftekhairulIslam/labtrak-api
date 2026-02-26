@@ -1,0 +1,4 @@
+# Create
+curl -X POST http://localhost:3000/test-codes \
+  -H "Content-Type: application/json" \
+  -d '{"code":"H008","name":"Full Blood Examination (no ESR)","depName":"HAEMATOLOGY","synonym":"FBC"}'

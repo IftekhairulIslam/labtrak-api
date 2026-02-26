@@ -1,0 +1,4 @@
+# Update
+curl -X PATCH http://localhost:3000/test-codes/<id> \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Glucose, Serum"}'

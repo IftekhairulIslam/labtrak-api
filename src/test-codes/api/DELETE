@@ -1,0 +1,2 @@
+# Delete
+curl -X DELETE http://localhost:3000/test-codes/<id>
