@@ -9,25 +9,27 @@ import {
 } from '@nestjs/common';
 import { CreateTestCodeDto } from './dto/create-test-code.dto';
 import { UpdateTestCodeDto } from './dto/update-test-code.dto';
-import type { TestCodeWithId } from './test-code.interface';
 import { TestCodesService } from './test-codes.service';
+import { TestCodeEntity } from './test-code.entity';
 
 @Controller('test-codes')
 export class TestCodesController {
   constructor(private readonly testCodesService: TestCodesService) {}
 
   @Get()
-  findAll(): TestCodeWithId[] {
+  findAll(): Promise<TestCodeEntity[]> {
     return this.testCodesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): TestCodeWithId {
+  findOne(@Param('id') id: string): Promise<TestCodeEntity> {
     return this.testCodesService.findOne(id);
   }
 
   @Post()
-  create(@Body() createTestCodeDto: CreateTestCodeDto): TestCodeWithId {
+  create(
+    @Body() createTestCodeDto: CreateTestCodeDto,
+  ): Promise<TestCodeEntity> {
     return this.testCodesService.create(createTestCodeDto);
   }
 
@@ -35,12 +37,12 @@ export class TestCodesController {
   update(
     @Param('id') id: string,
     @Body() updateTestCodeDto: UpdateTestCodeDto,
-  ): TestCodeWithId {
+  ): Promise<TestCodeEntity> {
     return this.testCodesService.update(id, updateTestCodeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): void {
+  remove(@Param('id') id: string): Promise<void> {
     return this.testCodesService.remove(id);
   }
 }
