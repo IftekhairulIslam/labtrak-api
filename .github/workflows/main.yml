@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'yarn'
 
       - name: Install dependencies
@@ -27,6 +27,7 @@ jobs:
 
       - name: Create deployment package
         run: |
+          yarn install --production --frozen-lockfile
           tar -czf deploy.tar.gz dist/ package.json node_modules/
 
       - name: Copy build to server
@@ -40,12 +41,18 @@ jobs:
 
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          ENV_FILE: ${{ secrets.ENV_FILE }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: ENV_FILE
           script: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             cd /home/labtrak-api
             tar -xzf /tmp/deploy.tar.gz
+            echo "$ENV_FILE" > .env
             pm2 restart labtrak-api || pm2 start dist/main.js --name labtrak-api
             rm /tmp/deploy.tar.gz
