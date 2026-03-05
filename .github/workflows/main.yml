@@ -27,7 +27,7 @@ jobs:
 
       - name: Create deployment package
         run: |
-          tar -czf deploy.tar.gz dist/ package.json yarn.lock
+          tar -czf deploy.tar.gz dist/ package.json node_modules/
 
       - name: Copy build to server
         uses: appleboy/scp-action@v0.1.7
@@ -47,6 +47,5 @@ jobs:
           script: |
             cd /home/labtrak-api
             tar -xzf /tmp/deploy.tar.gz
-            yarn install --production --frozen-lockfile
             pm2 restart labtrak-api || pm2 start dist/main.js --name labtrak-api
             rm /tmp/deploy.tar.gz
