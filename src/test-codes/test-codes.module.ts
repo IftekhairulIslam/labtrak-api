@@ -9,7 +9,6 @@ import { TestCodesSeeder } from './seeder/test-codes.seeder';
   imports: [TypeOrmModule.forFeature([TestCodeEntity])],
   controllers: [TestCodesController],
   providers: [TestCodesService, TestCodesSeeder],
-  exports: [TestCodesService],
 })
 export class TestCodesModule {
   constructor() {}
