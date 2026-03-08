@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestCodesModule } from './test-codes/test-codes.module';
 import { ConfigModule } from '@nestjs/config';
+import appDataSource from './database/data-source';
 
 @Module({
   imports: [
@@ -12,14 +13,8 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: '.env',
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DB_HOST ?? 'localhost',
-      port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
-      username: process.env.DB_USER ?? 'user_name',
-      password: process.env.DB_PASSWORD ?? 'user_password',
-      database: process.env.DB_NAME ?? 'labtrak',
-      synchronize: false,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      ...appDataSource.options,
+      autoLoadEntities: true,
     }),
     TestCodesModule,
   ],
