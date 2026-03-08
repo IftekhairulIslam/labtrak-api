@@ -9,11 +9,11 @@ const appDataSource = new DataSource({
   password: process.env.DB_PASSWORD ?? 'user_password',
   database: process.env.DB_NAME ?? 'labtrak',
 
-  entities: ['./src/**/*.entity{.ts,.js}'],
-  migrations: ['./src/migrations/*{.ts,.js}'],
+  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+  migrations: [__dirname + '/../**/migrations/*{.ts,.js}'],
 
-  // IMPORTANT: synchronize must be false when using migrations
   synchronize: false,
+  migrationsRun: false,
 });
 
 export default appDataSource;
