@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestCodesModule } from './test-codes/test-codes.module';
-import { TestCodeEntity } from './test-codes/entity/test-code.entity';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -19,8 +18,8 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DB_USER ?? 'user_name',
       password: process.env.DB_PASSWORD ?? 'user_password',
       database: process.env.DB_NAME ?? 'labtrak',
-      entities: [TestCodeEntity],
       synchronize: false,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
     }),
     TestCodesModule,
   ],
